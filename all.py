@@ -3,7 +3,7 @@ import json
 import safaribooks
 import argparse
 
-for (dirpath, dirnames, filenames) in os.walk("./books"):
+for (dirpath, dirnames, filenames) in os.walk("../OneDrive - ueqt/safaribooks/_index/"):
     for filename in filenames:
         with open(dirpath + '/' + filename) as json_file:
             data = json.load(json_file)

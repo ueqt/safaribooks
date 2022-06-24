@@ -29,7 +29,7 @@ def parse_contents_into_list(text):
 
 def write_id_list_to_txt_file(book_list):
     for book in book_list:
-        with open("books/" + book["archive_id"] + ".json", 'w') as txt_file_handler:
+        with open("../OneDrive - ueqt/safaribooks/_index/" + book["archive_id"] + ".json", 'w') as txt_file_handler:
             txt_file_handler.write(json.dumps(book, indent='\t'))       
         txt_file_handler.close()
 
