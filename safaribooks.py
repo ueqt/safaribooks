@@ -56,7 +56,7 @@ class Display:
         self.logger.setLevel(logging.INFO)
         logs_handler = logging.FileHandler(filename=self.log_file)
         logs_handler.setFormatter(self.BASE_FORMAT)
-        logs_handler.setLevel(logging.INFO)
+        logs_handler.setLevel(logging.ERROR)
         self.logger.addHandler(logs_handler)
 
         self.columns, _ = shutil.get_terminal_size()
@@ -71,6 +71,11 @@ class Display:
 
         self.state_status = Value("i", 0)
         sys.excepthook = self.unhandled_exception
+
+    def shutdown(self):
+        logging.shutdown()
+        if os.stat(self.log_file).st_size == 0 : 
+            os.remove(self.log_file)
 
     def set_output_dir(self, output_dir):
         self.info("Output directory:\n    %s" % output_dir)
@@ -125,7 +130,7 @@ class Display:
         self.out(output)
 
         self.save_last_request()
-        sys.exit(1)
+        raise Exception(str(error))
 
     def unhandled_exception(self, _, o, tb):
         self.log("".join(traceback.format_tb(tb)))
@@ -208,7 +213,7 @@ class Display:
                        "    `" + SAFARI_BASE_URL + "/library/view/book-name/XXXXXXXXXXXXX/`"
 
         else:
-            os.remove(COOKIES_FILE)
+            # os.remove(COOKIES_FILE)
             message += "Out-of-Session%s.\n" % (" (%s)" % response["detail"]) if "detail" in response else "" + \
                        Display.SH_YELLOW + "[+]" + Display.SH_DEFAULT + \
                        " Use the `--cred` or `--login` options in order to perform the auth login to Safari."
@@ -312,7 +317,8 @@ class SafariBooks:
     def __init__(self, args):
         self.args = args
         self.display = Display("info_%s.log" % escape(args.bookid))
-        self.display.intro()
+        self.display.info(args.bookid)
+        # self.display.intro()
 
         self.session = requests.Session()
         if USE_PROXY:  # DEBUG
@@ -336,10 +342,10 @@ class SafariBooks:
             if not args.no_cookies:
                 json.dump(self.session.cookies.get_dict(), open(COOKIES_FILE, 'w'))
 
-        self.check_login()
+        # self.check_login()
 
         self.book_id = args.bookid
-        self.api_url = self.API_TEMPLATE.format(self.book_id)
+        self.api_url = args.url # self.API_TEMPLATE.format(self.book_id)
 
         self.display.info("Retrieving book info...")
         self.book_info = self.get_book_info()
@@ -359,11 +365,11 @@ class SafariBooks:
         self.clean_book_title = "".join(self.escape_dirname(self.book_title).split(",")[:2]) \
                                 + " ({0})".format(self.book_id)
 
-        books_dir = os.path.join(PATH, "Books")
+        books_dir = os.path.join(PATH, args.dir)
         if not os.path.isdir(books_dir):
             os.mkdir(books_dir)
 
-        self.BOOK_PATH = os.path.join(books_dir, self.clean_book_title)
+        self.BOOK_PATH = os.path.join(books_dir, self.book_id) # self.clean_book_title)
         self.display.set_output_dir(self.BOOK_PATH)
         self.css_path = ""
         self.images_path = ""
@@ -411,7 +417,10 @@ class SafariBooks:
         self.display.unregister()
 
         if not self.display.in_error and not args.log:
-            os.remove(self.display.log_file)
+            try:
+                os.remove(self.display.log_file)
+            except:
+                self.display.shutdown()
 
     def handle_cookie_update(self, set_cookie_headers):
         for morsel in set_cookie_headers:
@@ -533,6 +542,11 @@ class SafariBooks:
         response = self.requests_provider(self.api_url)
         if response == 0:
             self.display.exit("API: unable to retrieve book info.")
+
+        if response.status_code == 404:
+            # self.display.shutdown()
+            self.display.error("Book Not found")
+            raise FileNotFoundError()
 
         response = response.json()
         if not isinstance(response, dict) or len(response.keys()) == 1:
