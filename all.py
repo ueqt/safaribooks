@@ -12,7 +12,7 @@ from threading import Lock
 currentPath = os.getcwd()
 defaultPath = currentPath + "/../OneDrive - ueqt/safaribooks/_index/"
 lock = Lock()
-thread_count = 32
+thread_count = 8
 result = 0
 
 def dealFile(filename):
@@ -29,7 +29,7 @@ def dealFile(filename):
         args = argparse.Namespace()
         args.bookid = data["archive_id"]
         args.url = data["url"]
-        args.dir = currentPath + "/../OneDrive - ueqt/safaribooks/"
+        args.dir = currentPath + "/Downloads/"
         args.no_cookies = None
         args.log = None
         args.cred = None
@@ -39,7 +39,9 @@ def dealFile(filename):
             print('has log')
             if os.stat(currentPath + "/info_" + args.bookid + ".log").st_size == 0 : 
                 os.remove(currentPath + "/info_" + args.bookid + ".log")
-        if not os.path.isfile(args.dir + args.bookid + "/" + args.bookid + ".epub"):
+        # 仅中文
+        # if data["language"].startswith("zh"):
+        if not os.path.isfile(args.dir + args.bookid + "/" + args.bookid + ".epub") and not os.path.isfile(args.dir  + "../../OneDrive - ueqt/safaribooks/" + args.bookid + ".epub"):
             # 没处理过
             print('start deal')
             safaribooks.SafariBooks(args)

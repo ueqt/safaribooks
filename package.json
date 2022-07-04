@@ -1,0 +1,24 @@
+{
+  "name": "oreilly",
+  "version": "1.0.0",
+  "description": "Download and generate *EPUB* of your favorite books from [*Safari Books Online*](https://www.safaribooksonline.com) library.  \r I'm not responsible for the use of this program, this is only for *personal* and *educational* purpose.  \r Before any usage please read the *O'Reilly*'s [Terms of Service](https://learning.oreilly.com/terms/).",
+  "main": "epub.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ueqt/safaribooks.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ueqt/safaribooks/issues"
+  },
+  "homepage": "https://github.com/ueqt/safaribooks#readme",
+  "dependencies": {
+    "fs-extra": "^10.1.0",
+    "rimraf": "^3.0.2"
+  }
+}

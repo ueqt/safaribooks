@@ -1,4 +1,5 @@
-books
+Books/
+Downloads/
 .idea/
 .vscode/
 .DS_Store
@@ -11,3 +12,6 @@ cookies.json
 *.log
 *.txt
 *.code-workspace
+
+node_modules/
+
