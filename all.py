@@ -7,10 +7,12 @@ import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from threading import Lock
 
+# https://learning.oreilly.com/search/?query=*&extended_publisher_data=true&highlight=true&include_assessments=false&include_case_studies=true&include_courses=true&include_playlists=true&include_collections=true&include_notebooks=true&include_cloud_scenarios=true&include_sandboxes=true&include_scenarios=true&is_academic_institution_account=false&source=user&formats=book&sort=relevance&facet_json=true&json_facets=true&page=0&include_facets=true&include_practice_exams=true
+
 currentPath = os.getcwd()
 defaultPath = currentPath + "/../OneDrive - ueqt/safaribooks/_index/"
 lock = Lock()
-thread_count = 64
+thread_count = 32
 result = 0
 
 def dealFile(filename):
