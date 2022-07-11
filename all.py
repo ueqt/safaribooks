@@ -12,7 +12,7 @@ from threading import Lock
 currentPath = os.getcwd()
 defaultPath = currentPath + "/../OneDrive - ueqt/safaribooks/_index/"
 lock = Lock()
-thread_count = 8
+thread_count = 16
 result = 0
 
 def dealFile(filename):
