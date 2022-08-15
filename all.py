@@ -12,8 +12,10 @@ from threading import Lock
 currentPath = os.getcwd()
 defaultPath = currentPath + "/../OneDrive - ueqt/safaribooks/_index/"
 lock = Lock()
+# lock2 = Lock()
 thread_count = 16
 result = 0
+# notfounds = []
 
 def dealFile(filename):
     global result
@@ -45,9 +47,12 @@ def dealFile(filename):
             # 没处理过
             print('start deal')
             safaribooks.SafariBooks(args)
-    # except FileNotFoundError as err:
-    #     print(args.bookid + " not found")
-        print('deal end')
+            print('deal end')
+    except FileNotFoundError as err:
+        print(args.bookid + " not found")
+        os.remove(defaultPath + filename)
+        # with lock2:
+        #     notfounds.append(args.bookid + ' ' + filename)
     except Exception as err:
         print(err)
     print('done: ' + filename)
@@ -73,6 +78,17 @@ for (dirpath, dirnames, filenames) in os.walk(defaultPath):
         # print(times)
     print(len(list_fn))
     print(result)
+
+# for nf in notfounds:
+#     toDelete = nf.split(' ')
+#    if os.stat(currentPath + "/info_" + toDelete[0] + ".log").st_size == 0 : 
+#         os.remove(defaultPath + toDelete[1])
+#        try:
+#            os.remove(currentPath + "/info_" + toDelete[0] + ".log")
+#        except:
+#            pass
+#        print('deleted ' + nf)
+
 print('*' * 50)
 print('*' * 50)
 print('*' * 50)

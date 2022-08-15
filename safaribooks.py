@@ -544,7 +544,7 @@ class SafariBooks:
             self.display.exit("API: unable to retrieve book info.")
 
         if response.status_code == 404:
-            # self.display.shutdown()
+            self.display.shutdown()
             self.display.error("Book Not found")
             raise FileNotFoundError()
 
