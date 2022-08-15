@@ -3,8 +3,8 @@ const path = require('path');
 const { execSync } = require("child_process");
 const rimraf = require('rimraf');
 
-const rpath = 'E:\\OneDriveComic\\oreilly\\Downloads\\';
-const tpath = 'E:\\OneDriveComic\\OneDrive - ueqt\\safaribooks\\';
+const rpath = 'C:\\Users\\ueqt\\safaribooks\\Downloads\\';
+const tpath = 'C:\\Users\\ueqt\\OneDrive - ueqt\\safaribooks\\';
 // const rpath = 'E:\\Downloads\\';
 const zip = 'c:\\Program Files\\7-Zip\\7z.exe';
 
@@ -37,7 +37,14 @@ const dozip = async () => {
             stdio: 'inherit'
         });
         rimraf.sync(cpath);
+        try
+        {
         fs.moveSync(path.join(rpath, files[i] + '.epub'), path.join(tpath, files[i] + '.epub'));
+        }
+        catch
+        {
+            rimraf.sync(path.join(rpath, files[i] + '.epub'));
+        }
     }
 }
 
