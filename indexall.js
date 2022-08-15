@@ -8,7 +8,7 @@ let result = {
     keys: {}
 };
 for (let i = 0; i < files.length; i++) {
-    console.log(`${i + 1} / ${files.length}`);
+    console.log(`${i + 1} / ${files.length} ${files[i]}`);
     if(files[i].lastIndexOf('.json') < 0) {
         continue;
     }
@@ -19,7 +19,7 @@ for (let i = 0; i < files.length; i++) {
             data = JSON.parse(fs.readFileSync(cpath, { encoding: 'utf-8'}));
             break;
         } catch(err) {
-            console.error(err);
+            console.error(i.toString() + ':' + files[i] + ':' + err);
         }
     }
     result.datas[data["archive_id"]] = data;
