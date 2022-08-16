@@ -50,7 +50,8 @@ def dealFile(filename):
             print('deal end')
     except FileNotFoundError as err:
         print(args.bookid + " not found")
-        os.remove(defaultPath + filename)
+        if not os.path.exists(defaultPath + "../" + filename[0:-4] + "epub"):
+            os.remove(defaultPath + filename)
         # with lock2:
         #     notfounds.append(args.bookid + ' ' + filename)
     except Exception as err:

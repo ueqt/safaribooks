@@ -171,3 +171,21 @@ In this case, I suggest you to convert the `EPUB` to `AZW3` with Calibre or to `
 For any kind of problem, please don't hesitate to open an issue here on *GitHub*.  
   
 *Lorenzo Di Fuccia*
+
+## usage
+
+create cookies.json
+
+```
+{"OptanonAlertBoxClosed": "2022-06-21T04:56:02.472Z", "OptanonConsent": "isIABGlobal=false&datestamp=Tue+Jun+21+2022+12%3A56%3A02+GMT%2B0800+(China+Standard+Time)&version=6.25.0&hosts=&landingPath=NotLandingPage&groups=C0001%3A1%2CC0002%3A1%2CC0003%3A1%2CC0004%3A1&AwaitingReconsent=false&geolocation=SG%3B", "_evga_5802": "{%22uuid%22:%22ede3082c8ed85e3f%22%2C%22puid%22:%223elgTPX5tTcpFUZaAl8F_IrsHHDSKIH3WC7fxQLQNnWIzzl70IrmNHuJ3xonjeKEkZ5nUX4mHAV_AQfHm7p8gwDkRxxAcb4uxHNaLSpkx16-tbyxc35P0qOKtWGIhLK0%22%2C%22affinityId%22:%220CB%22}", "_ga": "GA1.1.1228601484.1655346787", "_ga_4WZYL59WMV": "GS1.1.1655781136.2.0.1655781136.60", "_ga_ZMQH4QCXDQ": "GS1.1.1655787049.8.1.1655787362.60", "_gat_UA-112091926-1": "1", "_gid": "GA1.2.1228942496.1655713795", "_mkto_trk": "id:107-FMS-070&token:_mch-oreilly.com-1655348667892-98625", "_sfid_472e": "{%22anonymousId%22:%22ede3082c8ed85e3f%22%2C%22consents%22:[]}", "_vis_opt_exp_195_combi": "2", "_vis_opt_s": "1%7C", "_vis_opt_test_cookie": "1", "_vwo_ds": "3%241655781138%3A23.35388259%3A%3A", "_vwo_uuid": "DA6082348FE871D616CFDD9FFCE6946B3", "_vwo_uuid_v2": "DA6082348FE871D616CFDD9FFCE6946B3|0e57fdf6d196cba27d55545217903790", "akaalb_LearningALB": "~op=learning_oreilly_com_GCP_ALB:learning_oreilly_com_gcp1|~rv=1~m=learning_oreilly_com_gcp1:0|~os=3284f997983d0bd4e10a6b83f3b25a7c~id=48afc206cab4ea09b93f82063fe60365", "amp_49f7a6": "iQJJF5g-V3w0O6sphvL2nu.OThmYzRjNGQtZmJiOC00YTRlLThjMjUtZWQ0ZjQ4Y2IzYWJm..1g629iku9.1g629s4iu.p.r.1k", "groot_sessionid": "bhsv7q55n2iz6vpfgyay2f3fmga8aq63", "orm-jwt": "", "orm-rt": "c40c48d7264b4ba8882d5a42604fe59f"}
+```
+
+change `orm-jwt` from `Application` `Cookies`
+change `index.py` `TOTAL` from `https://learning.oreilly.com/topics/?sort=date_added&format=book`
+
+```
+python index.py
+python all.py
+node epub
+node indexall
+```
