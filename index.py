@@ -15,6 +15,7 @@ PATH = os.path.dirname(os.path.realpath(__file__))
 COOKIES_FILE = os.path.join(PATH, "cookies.json")
 SESSION = requests.Session()
 COOKIE = json.load(open(COOKIES_FILE))
+TOTAL = 45480
 
 def retrieve_page_contents(url):
     SESSION.cookies.update(COOKIE)
@@ -55,7 +56,7 @@ if __name__ == '__main__':
 
     url = "https://learning.oreilly.com/api/v2/search/?query=*&limit=200&include_collections=true&include_courses=true&include_notebooks=false&include_playlists=true&include_sandboxes=true&include_scenarios=true&collection_type=expert&exclude_fields=description&include_facets=false&formats=book&sort=date_added&page="
 
-    for page_number in range(0, math.ceil(45444 / 200)):
+    for page_number in range(0, math.ceil(TOTAL / 200)):
         # don't expect to see a topic with more than 100 pages of books in it
         print(page_number)
         book_list_for_topic = []
