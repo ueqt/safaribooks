@@ -601,10 +601,16 @@ class SafariBooks:
     def get_html(self, url):
         response = self.requests_provider(url)
         if response == 0 or response.status_code != 200:
-            self.display.exit(
-                "Crawler: error trying to retrieve this page: %s (%s)\n    From: %s" %
-                (self.filename, self.chapter_title, url)
-            )
+            if response.status_code == 403 and url.endswith(".ini.html"):
+                pass
+            else:
+                self.display.exit(
+                    "Crawler: error trying to retrieve this page: %s (%s)\n    From: %s" %
+                    (self.filename, self.chapter_title, url)
+                )
+
+        if response.status_code == 403:
+            return None
 
         root = None
         try:
@@ -667,6 +673,8 @@ class SafariBooks:
         return None
 
     def parse_html(self, root, first_page=False):
+        if root is None:
+            return None
         if random() > 0.8:
             if len(root.xpath("//div[@class='controls']/a/text()")):
                 self.display.exit(self.display.api_error(" "))
@@ -808,6 +816,8 @@ class SafariBooks:
             self.display.images_ad_info.value = 1
 
     def save_page_html(self, contents):
+        if contents is None:
+            return
         self.filename = self.filename.replace(".html", ".xhtml")
         open(os.path.join(self.BOOK_PATH, "OEBPS", self.filename), "wb") \
             .write(self.BASE_HTML.format(contents[0], contents[1]).encode("utf-8", 'xmlcharrefreplace'))
