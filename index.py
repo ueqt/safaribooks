@@ -15,7 +15,7 @@ PATH = os.path.dirname(os.path.realpath(__file__))
 COOKIES_FILE = os.path.join(PATH, "cookies.json")
 SESSION = requests.Session()
 COOKIE = json.load(open(COOKIES_FILE))
-TOTAL = 45480
+TOTAL = 45486
 
 def retrieve_page_contents(url):
     SESSION.cookies.update(COOKIE)
