@@ -15,10 +15,12 @@ lock = Lock()
 # lock2 = Lock()
 thread_count = 16
 result = 0
+delete_count = 0
 # notfounds = []
 
 def dealFile(filename):
     global result
+    global delete_count
     with lock:
         result += 1
         print('=' * 50)
@@ -52,6 +54,7 @@ def dealFile(filename):
         print(args.bookid + " not found")
         if not os.path.exists(defaultPath + "../" + filename[0:-4] + "epub"):
             os.remove(defaultPath + filename)
+            delete_count = delete_count + 1
         # with lock2:
         #     notfounds.append(args.bookid + ' ' + filename)
     except Exception as err:
@@ -97,3 +100,7 @@ print("finish")
 print('*' * 50)
 print('*' * 50)
 print('*' * 50)
+print('delete: ' + str(delete_count))
+with open('./_delete.txt', 'w') as txt_file_handler:
+    txt_file_handler.write(str(delete_count))
+txt_file_handler.close()  
