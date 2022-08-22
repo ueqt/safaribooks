@@ -80,7 +80,7 @@ if __name__ == '__main__':
             page_content = retrieve_page_contents(url + str(page_number))
             
         except ValueError:
-            break
+            raise ValueError('Invalid server response.')
         
         finally:
             book_list = parse_contents_into_list(page_content)
