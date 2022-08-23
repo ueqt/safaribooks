@@ -342,7 +342,7 @@ class SafariBooks:
             if not args.no_cookies:
                 json.dump(self.session.cookies.get_dict(), open(COOKIES_FILE, 'w'))
 
-        # self.check_login()
+        self.check_login()
 
         self.book_id = args.bookid
         self.api_url = args.url # self.API_TEMPLATE.format(self.book_id)

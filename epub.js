@@ -37,6 +37,8 @@ const dozip = async () => {
             stdio: 'inherit'
         });
         rimraf.sync(cpath);
+        // 先删除原来的epub文件
+        rimraf.sync(path.join(tpath, files[i] + '.epub'));
         try
         {
         fs.moveSync(path.join(rpath, files[i] + '.epub'), path.join(tpath, files[i] + '.epub'));

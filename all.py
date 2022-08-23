@@ -59,6 +59,7 @@ def dealFile(filename):
         #     notfounds.append(args.bookid + ' ' + filename)
     except Exception as err:
         print(err)
+        os.kill(os.getpid(), 9)
     print('done: ' + filename)
     return filename
 
