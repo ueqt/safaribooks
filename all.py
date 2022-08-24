@@ -1,4 +1,5 @@
 from concurrent.futures import ThreadPoolExecutor
+from multiprocessing import AuthenticationError
 import os
 import json
 import time
@@ -57,9 +58,10 @@ def dealFile(filename):
             delete_count = delete_count + 1
         # with lock2:
         #     notfounds.append(args.bookid + ' ' + filename)
+    except AuthenticationError as err:
+        os.kill(os.getpid(), 9)
     except Exception as err:
         print(err)
-        os.kill(os.getpid(), 9)
     print('done: ' + filename)
     return filename
 

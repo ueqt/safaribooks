@@ -14,7 +14,7 @@ import traceback
 from html import escape
 from random import random
 from lxml import html, etree
-from multiprocessing import Process, Queue, Value
+from multiprocessing import AuthenticationError, Process, Queue, Value
 from urllib.parse import urljoin, urlparse, parse_qs, quote_plus
 
 
@@ -528,12 +528,15 @@ class SafariBooks:
         response = self.requests_provider(PROFILE_URL, perform_redirect=False)
 
         if response == 0:
+            raise AuthenticationError()
             self.display.exit("Login: unable to reach Safari Books Online. Try again...")
 
         elif response.status_code != 200:
+            raise AuthenticationError()
             self.display.exit("Authentication issue: unable to access profile page.")
 
         elif "user_type\":\"Expired\"" in response.text:
+            raise AuthenticationError()
             self.display.exit("Authentication issue: account subscription expired.")
 
         self.display.info("Successfully authenticated.", state=True)
