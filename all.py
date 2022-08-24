@@ -59,6 +59,7 @@ def dealFile(filename):
         # with lock2:
         #     notfounds.append(args.bookid + ' ' + filename)
     except AuthenticationError as err:
+        print('no auth')
         os.kill(os.getpid(), 9)
     except Exception as err:
         print(err)
